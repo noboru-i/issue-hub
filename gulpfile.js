@@ -8,7 +8,8 @@ gulp.task(
   [
     'compile-es6',
     'compile-html',
-    'compile-css'
+    'compile-css',
+    'compile-font'
   ]
 );
 
@@ -33,7 +34,15 @@ gulp.task(
 gulp.task(
   'compile-css',
   function () {
-    gulp.src('src/**/*.scss')
+    gulp.src('src/**/*.css')
+      .pipe(gulp.dest('app'));
+  }
+);
+
+gulp.task(
+  'compile-font',
+  function () {
+    gulp.src(['src/**/*.eot', 'src/**/*.svg', 'src/**/*.ttf', 'src/**/*.woff'])
       .pipe(gulp.dest('app'));
   }
 );
