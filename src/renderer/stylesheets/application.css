@@ -1,0 +1,20 @@
+body, div {
+  margin: 0;
+  padding: 0;
+}
+
+.root {
+  display: flex;
+}
+
+.sidebar {
+  height: 100vh;
+  overflow-y: scroll;
+  width: 30%;
+}
+
+.main-view {
+  height: 100vh;
+  overflow-y: scroll;
+  width: 70%;
+}

@@ -1,0 +1,46 @@
+{
+  "name": "issue-hub",
+  "version": "1.0.0",
+  "description": "GitHub issue client made by Electron.",
+  "main": "app/browser/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "gulp compile",
+    "start": "electron .",
+    "watch": "gulp watch",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noboru-i/issue-hub.git"
+  },
+  "keywords": [],
+  "author": "noboru-i",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noboru-i/issue-hub/issues"
+  },
+  "homepage": "https://github.com/noboru-i/issue-hub",
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "babel-core": "^5.8.25",
+    "electron-prebuilt": "^0.34.0",
+    "eslint": "^1.7.2",
+    "eslint-plugin-react": "^3.6.3",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.3.0",
+    "gulp-plumber": "^1.0.1"
+  },
+  "dependencies": {
+    "flux": "^2.1.1",
+    "github": "^0.2.4",
+    "immutable": "^3.7.5",
+    "react": "^0.14.0",
+    "react-addons-create-fragment": "^0.14.0",
+    "react-addons-pure-render-mixin": "^0.14.0",
+    "react-addons-transition-group": "^0.14.0",
+    "react-addons-update": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-tap-event-plugin": "^0.2.0"
+  }
+}
