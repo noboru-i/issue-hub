@@ -8,7 +8,6 @@ export default class GithubIssue {
       // required
       version: "3.0.0",
       // optional
-      debug: true,
       protocol: "https",
       timeout: 5000,
       headers: {
@@ -26,7 +25,6 @@ export default class GithubIssue {
         type: 'issues/fetch-complete',
         value: res
       });
-      console.log(JSON.stringify(res));
     });
   }
 }

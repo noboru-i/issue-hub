@@ -7,8 +7,10 @@ export default class MainView extends React.Component {
   }
 
   render() {
-    return <div className="main-view">
-      <RaisedButton label="main" />
+    return <div className="pane">
+      <div>
+        {this.props.selectedIssue.title}
+      </div>
     </div>;
   }
 }

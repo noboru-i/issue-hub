@@ -1,5 +1,5 @@
 import React from 'react'
-import Mui from 'material-ui'
+import SidebarItem from './sidebar-item'
 
 export default class Sidebar extends React.Component {
   constructor(props) {
@@ -8,12 +8,15 @@ export default class Sidebar extends React.Component {
 
   render() {
     const issues = this.props.issues;
-    return <div className="sidebar" >
-      <Mui.List>
+    return <div className="pane-sm sidebar">
+      <ul className="list-group">
+        <li className="list-group-header">
+          <input className="form-control" type="text" placeholder="Search for someone" />
+        </li>
         {issues.map((issue) => {
-          return <Mui.ListItem key={issue.id} primaryText={issue.title} />;
+          return <SidebarItem key={issue.id} issue={issue} />;
         })}
-      </Mui.List>
+      </ul>
     </div>;
   }
 }

@@ -18,14 +18,19 @@ class Root extends React.Component {
 
   static calculateState(prevState) {
     return {
-      issues: IssuesStore.getState(),
+      issues: IssuesStore.getState().get('issues'),
+      selectedIssue: IssuesStore.getState().get('selectedIssue')
     };
   }
 
   render() {
-    return <div className="root">
-      <Sidebar issues={this.state.issues} />
-      <MainView  />
+    return <div className="window">
+      <div className="window-content">
+        <div className="pane-group">
+          <Sidebar issues={this.state.issues} />
+          <MainView selectedIssue={this.state.selectedIssue} />
+        </div>
+      </div>
     </div>;
   }
 }
