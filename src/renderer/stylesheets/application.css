@@ -18,3 +18,16 @@ body, div {
   overflow-y: scroll;
   width: 70%;
 }
+
+.issue-title {
+  font-size: 2em;
+  margin: 0 auto;
+  padding: 10px 30px;
+}
+
+.markdown-body {
+  min-width: 200px;
+  max-width: 790px;
+  margin: 0 auto;
+  padding: 20px;
+}

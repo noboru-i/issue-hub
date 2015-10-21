@@ -14,6 +14,6 @@ export default class Application {
     var container = document.querySelector('#container');
     ReactDOM.render(<Root/>, container);
 
-    this.githubIssue.fetchIssue('noboru-i', 'android-saddler-sample');
+    this.githubIssue.fetchIssue('google', 'iosched');
   }
 }
