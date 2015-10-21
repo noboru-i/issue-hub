@@ -1,7 +1,6 @@
-var babel = require('gulp-babel');
-var gulp = require('gulp');
-var plumber = require('gulp-plumber');
-var watch = require('gulp-watch');
+import babel from 'gulp-babel';
+import gulp from 'gulp';
+import plumber from 'gulp-plumber';
 
 gulp.task(
   'compile',

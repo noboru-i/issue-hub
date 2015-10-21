@@ -1,9 +1,9 @@
-import React from 'react'
-import {Container} from 'flux/utils'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-import Sidebar from './sidebar'
-import MainView from './main-view'
-import IssuesStore from '../stores/issues-store'
+import React from 'react';
+import {Container} from 'flux/utils';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import Sidebar from './sidebar';
+import MainView from './main-view';
+import IssuesStore from '../stores/issues-store';
 
 
 class Root extends React.Component {
@@ -16,7 +16,7 @@ class Root extends React.Component {
     return [IssuesStore];
   }
 
-  static calculateState(prevState) {
+  static calculateState() {
     return {
       issues: IssuesStore.getState().get('issues'),
       selectedIssue: IssuesStore.getState().get('selectedIssue')

@@ -12,12 +12,12 @@ class IssuesStore extends ReduceStore {
 
   reduce(state, action) {
     switch(action.type) {
-      case 'issues/fetch-complete':
-        return state.set('issues', action.value);
-      case 'issue/select':
-        return state.set('selectedIssue', action.value);
-      default:
-        return state;
+    case 'issues/fetch-complete':
+      return state.set('issues', action.value);
+    case 'issue/select':
+      return state.set('selectedIssue', action.value);
+    default:
+      return state;
     }
   }
 }

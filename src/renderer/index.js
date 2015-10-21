@@ -1,4 +1,4 @@
-import Application from './libraries/application'
+import Application from './libraries/application';
 
 try {
   new Application().run();

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {dispatch} from '../dispatcher/app-dispatcher';
 
 export default class SidebarItem extends React.Component {

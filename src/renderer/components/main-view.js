@@ -1,5 +1,4 @@
-import React from 'react'
-import RaisedButton from 'material-ui/lib/raised-button'
+import React from 'react';
 
 export default class MainView extends React.Component {
   constructor(props) {

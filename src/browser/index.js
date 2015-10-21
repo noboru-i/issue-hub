@@ -1,5 +1,6 @@
-import app from 'app'
-import BrowserWindow from 'browser-window'
+/*global __dirname*/
+import app from 'app';
+import BrowserWindow from 'browser-window';
 
 var mainWindow = null;
 

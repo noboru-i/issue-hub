@@ -1,5 +1,5 @@
-import React from 'react'
-import SidebarItem from './sidebar-item'
+import React from 'react';
+import SidebarItem from './sidebar-item';
 
 export default class Sidebar extends React.Component {
   constructor(props) {
