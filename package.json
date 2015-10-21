@@ -9,7 +9,7 @@
     "start": "electron .",
     "watch": "gulp watch",
     "lint": "eslint src",
-    "package": "npm run compile && electron-packager . issue-hub --arch=x64 --out=packages/v0.0.1 --overwrite --platform=darwin --version=0.34.0 --ignore={packages,src}/*"
+    "package": "gulp package:darwin"
   },
   "repository": {
     "type": "git",

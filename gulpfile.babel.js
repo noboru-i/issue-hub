@@ -1,6 +1,8 @@
+import pkg from './package.json';
 import babel from 'gulp-babel';
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
+import packager from 'electron-packager';
 
 gulp.task(
   'compile',
@@ -52,3 +54,21 @@ gulp.task(
     gulp.watch('src/**/*', ['compile']);
   }
 );
+
+gulp.task('package:darwin', ['compile'], (done) => {
+  packager({
+    dir: '.',
+    out: 'packages/v' + pkg.version,
+    name: pkg.name,
+    arch: 'x64',
+    platform: 'darwin',
+    version: '0.34.0',
+    overwrite: true,
+    ignore: [
+      '/packages',
+      '/src'
+    ]
+  }, () => {
+    done();
+  });
+});
