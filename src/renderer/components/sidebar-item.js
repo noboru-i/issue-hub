@@ -12,6 +12,7 @@ export default class SidebarItem extends React.Component {
     return <li className={this.getClassName.apply(this)}
         key={issue.id}
         onClick={this.itemClick.bind(this)}
+        onDoubleClick={this.itemDoubleClick.bind(this)}
         onMouseOver={this.onMouseOver.bind(this)}
         onMouseLeave={this.onMouseLeave.bind(this)}>
       <div className="media-body">
@@ -40,5 +41,9 @@ export default class SidebarItem extends React.Component {
       type: 'issue/select',
       value: this.props.issue
     });
+  }
+
+  itemDoubleClick() {
+    console.log('itemDoubleClick');
   }
 }
