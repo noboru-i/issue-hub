@@ -10,7 +10,7 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({width: 800, height: 600});
-  mainWindow.loadUrl(`file://${__dirname}/../editor/index.html`);
+  mainWindow.loadUrl(`file://${__dirname}/../list/index.html`);
 
   // Open the DevTools.
   // TODO only debug
