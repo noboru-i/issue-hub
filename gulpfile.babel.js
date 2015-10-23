@@ -62,6 +62,7 @@ gulp.task(
   'package:darwin',
   ['compile'],
   (done) => {
+    let devDependencies = Object.keys(pkg.devDependencies);
     packager({
       dir: '.',
       out: 'packages/v' + pkg.version,
@@ -71,9 +72,15 @@ gulp.task(
       version: '0.34.0',
       overwrite: true,
       ignore: [
-        '/packages',
-        '/src'
-      ]
+        '/.DS_Store',
+        '/.eslintrc',
+        '/.gitignore',
+        '/README.md',
+        '/gulpfile.babel.js',
+        '/node_modules/.bin($|/)',
+        '/packages($|/)',
+        '/src($|/)'
+      ].concat(devDependencies.map(function(name) { return `/node_modules/${name}($|/)`; }))
     }, () => {
       done();
     });
