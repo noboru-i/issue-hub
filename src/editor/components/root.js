@@ -1,12 +1,15 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Container} from 'flux/utils';
 
-import brace from 'brace';
 import AceEditor from 'react-ace';
-
+/*eslint-disable no-unused-vars*/
+import brace from 'brace';
 import Mode from 'brace/mode/markdown';
 import ThemeGithub from 'brace/theme/github';
+/*eslint-enable no-unused-vars*/
 
+import IssueStore from '../stores/issue-store.js'
 
 class Root extends React.Component {
   constructor(props) {
@@ -14,23 +17,33 @@ class Root extends React.Component {
   }
 
   static getStores() {
-    return [];
+    return [IssueStore];
   }
 
   static calculateState() {
-    return {};
+    return {
+      issue: IssueStore.getState().get('issues')
+    };
   }
 
   render() {
-    console.log(brace);
-    console.log(Mode);
-    console.log(ThemeGithub);
-    return <AceEditor
-    mode="markdown"
-    theme="github"
-    name="UNIQUE_ID_OF_DIV"
-    editorProps={{$blockScrolling: true}}
-  />;
+    const issue = this.props.issue;
+    const editorName = `editor_${issue.id}`;
+
+    return <div>
+      <div style={{height: "10vh"}}>
+        {issue.title}
+      </div>
+      <AceEditor
+        mode="markdown"
+        theme="github"
+        name={editorName}
+        editorProps={{$blockScrolling: true}}
+        value={issue.body}
+        width="100%"
+        height="90vh"
+      />
+    </div>;
   }
 }
 

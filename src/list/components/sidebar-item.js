@@ -1,5 +1,7 @@
 import React from 'react';
 import {dispatch} from '../dispatcher/app-dispatcher';
+import remote from 'remote';
+const openEditor = remote.require('../browser/index.js').openEditor;
 
 export default class SidebarItem extends React.Component {
   constructor(props) {
@@ -45,5 +47,6 @@ export default class SidebarItem extends React.Component {
 
   itemDoubleClick() {
     console.log('itemDoubleClick');
+    openEditor(this.props.issue);
   }
 }
