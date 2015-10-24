@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from '../components/root';
 import GithubIssue from '../command-models/github-issue';
+import issueDb from '../../shared/db/issue-db';
 
 export default class Application {
   constructor() {
@@ -14,6 +15,8 @@ export default class Application {
     var container = document.querySelector('#container');
     ReactDOM.render(<Root/>, container);
 
-    this.githubIssue.fetchIssue('google', 'iosched');
+    issueDb.initialize(() => {
+      this.githubIssue.fetchIssue('google', 'iosched');
+    });
   }
 }
