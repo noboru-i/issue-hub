@@ -5,8 +5,6 @@ import BrowserWindow from 'browser-window';
 let listWindow = null;
 let editorWindows = [];
 
-let issues = {};
-
 app.on('window-all-closed', () => {
   app.quit();
 });
@@ -23,11 +21,9 @@ app.on('ready', () => {
   });
 });
 
-export function openEditor(issue) {
-  console.log('openEditor');
+export function openEditor(issueId) {
   let editorWindow = new BrowserWindow({width: 800, height: 600});
-  issues[issue.id] = issue;
-  editorWindow.loadUrl(`file://${__dirname}/../editor/index.html?issue_id=${issue.id}`);
+  editorWindow.loadUrl(`file://${__dirname}/../editor/index.html?issue_id=${issueId}`);
 
   // TODO only debug
   editorWindow.openDevTools();
@@ -45,8 +41,4 @@ export function openEditor(issue) {
   });
 
   editorWindows.push(editorWindow);
-}
-
-export function getIssueFromId(issueId) {
-  return issues[issueId];
 }

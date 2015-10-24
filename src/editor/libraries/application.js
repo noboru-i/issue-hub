@@ -2,11 +2,10 @@
 import React from 'react';
 /*eslint-enable no-unused-vars*/
 import ReactDOM from 'react-dom';
-import Root from '../components/root';
 import Url from 'url';
-import Remote from 'remote';
 
-const getIssueFromId = Remote.require('../browser/index.js').getIssueFromId;
+import Root from '../components/root';
+import issueDb from '../../shared/db/issue-db';
 
 export default class Application {
   constructor() {
@@ -14,8 +13,12 @@ export default class Application {
 
   run() {
     let issueId = Url.parse(location.href, true).query.issue_id;
-    let issue = getIssueFromId(issueId);
-    var container = document.querySelector('#container');
-    ReactDOM.render(<Root issue={issue} />, container);
+
+    issueDb.initialize(() => {
+      issueDb.find(issueId, (issue) => {
+        var container = document.querySelector('#container');
+        ReactDOM.render(<Root issue={issue} />, container);
+      });
+    });
   }
 }

@@ -47,6 +47,6 @@ export default class SidebarItem extends React.Component {
 
   itemDoubleClick() {
     console.log('itemDoubleClick');
-    openEditor(this.props.issue);
+    openEditor(this.props.issue.id);
   }
 }

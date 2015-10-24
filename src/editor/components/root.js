@@ -1,5 +1,7 @@
 import React from 'react';
+/*eslint-disable no-unused-vars*/
 import ReactDOM from 'react-dom';
+/*eslint-enable no-unused-vars*/
 import {Container} from 'flux/utils';
 
 import AceEditor from 'react-ace';
@@ -9,7 +11,7 @@ import Mode from 'brace/mode/markdown';
 import ThemeGithub from 'brace/theme/github';
 /*eslint-enable no-unused-vars*/
 
-import IssueStore from '../stores/issue-store.js'
+import IssueStore from '../stores/issue-store.js';
 
 class Root extends React.Component {
   constructor(props) {
@@ -31,7 +33,7 @@ class Root extends React.Component {
     const editorName = `editor_${issue.id}`;
 
     return <div>
-      <div style={{height: "10vh"}}>
+      <div style={{height: '10vh'}}>
         {issue.title}
       </div>
       <AceEditor
