@@ -1,4 +1,5 @@
 import GitHubApi from 'github';
+import remote from 'remote';
 
 import {dispatch} from '../dispatcher/app-dispatcher';
 import issueDb from '../../shared/db/issue-db';
@@ -14,6 +15,12 @@ export default class GithubIssue {
       headers: {
         'user-agent': 'IssueHub'
       }
+    });
+
+    let token = remote.getGlobal('applicationData').githubAccessToken;
+    this.github.authenticate({
+      type: 'oauth',
+      token: token
     });
   }
 

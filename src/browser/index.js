@@ -1,7 +1,9 @@
+/*global global*/
 /*global __dirname*/
 import app from 'app';
 import BrowserWindow from 'browser-window';
 
+import ApplicationData from './libraries/application-data';
 import githubAuthUtil from './command-models/github-auth-util';
 
 let authWindow = null;
@@ -13,6 +15,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {
+  global.applicationData = new ApplicationData();
   openAuth();
 });
 
@@ -22,11 +25,12 @@ export function openAuth() {
   authWindow.show();
 
   const callback = (url) => {
-    githubAuthUtil.checkUrl(url, (err) => {
+    githubAuthUtil.checkUrl(url, (err, accessToken) => {
       if (err) {
         console.log(err);
         return;
       }
+      global.applicationData.githubAccessToken = accessToken;
       openList();
 
       authWindow.close();
