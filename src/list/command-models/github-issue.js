@@ -23,8 +23,6 @@ export default class GithubIssue {
       return;
     }
     issueDb.findAll((issues) => {
-      console.log(issues);
-      console.log('length = ' + issues.length);
       if (issues.length != 0) {
         // find in db
         dispatch({
@@ -50,6 +48,5 @@ export default class GithubIssue {
         value: res
       });
     });
-
   }
 }
