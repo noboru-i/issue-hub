@@ -13,32 +13,15 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {
+  openAuth();
+});
+
+export function openAuth() {
   authWindow = new BrowserWindow({width: 800, height: 600, show: false, 'node-integration': false});
   authWindow.loadUrl(githubAuthUtil.getAuthUrl());
-  console.log(githubAuthUtil.getAuthUrl());
   authWindow.show();
 
-  // TODO only debug
-  authWindow.openDevTools();
-
-  authWindow.webContents.on('did-get-redirect-request', (event, oldUrl, newUrl) => {
-    console.log('did-get-redirect-request');
-    console.log(`newUrl=${newUrl}`);
-    // auto login by cookie
-    githubAuthUtil.checkUrl(newUrl, (err) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      openList();
-
-      authWindow.close();
-    });
-  });
-
-  authWindow.webContents.on('will-navigate', (event, url) => {
-    // click authorize button
-    console.log('will-navigate');
+  const callback = (url) => {
     githubAuthUtil.checkUrl(url, (err) => {
       if (err) {
         console.log(err);
@@ -48,12 +31,24 @@ app.on('ready', () => {
 
       authWindow.close();
     });
+  };
+  authWindow.webContents.on('did-get-redirect-request', (event, oldUrl, newUrl) => {
+    console.log('did-get-redirect-request');
+    console.log(`newUrl=${newUrl}`);
+    // auto login by cookie
+    callback(newUrl);
+  });
+
+  authWindow.webContents.on('will-navigate', (event, url) => {
+    // click authorize button
+    console.log('will-navigate');
+    callback(url);
   });
 
   authWindow.on('closed', () => {
     authWindow = null;
   });
-});
+}
 
 export function openList() {
   listWindow = new BrowserWindow({width: 800, height: 600});
