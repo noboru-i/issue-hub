@@ -1,4 +1,5 @@
 import GitHubApi from 'github';
+import remote from 'remote';
 
 import {dispatch} from '../dispatcher/app-dispatcher';
 import issueDb from '../../shared/db/issue-db';
@@ -15,6 +16,12 @@ export default class GithubIssue {
         'user-agent': 'IssueHub'
       }
     });
+
+    let token = remote.getGlobal('applicationData').githubAccessToken;
+    this.github.authenticate({
+      type: 'oauth',
+      token: token
+    });
   }
 
   fetchIssue(user, repo, forceReload = false) {
@@ -23,8 +30,6 @@ export default class GithubIssue {
       return;
     }
     issueDb.findAll((issues) => {
-      console.log(issues);
-      console.log('length = ' + issues.length);
       if (issues.length != 0) {
         // find in db
         dispatch({
@@ -50,6 +55,5 @@ export default class GithubIssue {
         value: res
       });
     });
-
   }
 }

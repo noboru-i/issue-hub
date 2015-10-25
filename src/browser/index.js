@@ -1,7 +1,12 @@
+/*global global*/
 /*global __dirname*/
 import app from 'app';
 import BrowserWindow from 'browser-window';
 
+import ApplicationData from './libraries/application-data';
+import githubAuthUtil from './command-models/github-auth-util';
+
+let authWindow = null;
 let listWindow = null;
 let editorWindows = [];
 
@@ -10,6 +15,46 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {
+  global.applicationData = new ApplicationData();
+  openAuth();
+});
+
+export function openAuth() {
+  authWindow = new BrowserWindow({width: 800, height: 600, show: false, 'node-integration': false});
+  authWindow.loadUrl(githubAuthUtil.getAuthUrl());
+  authWindow.show();
+
+  const callback = (url) => {
+    githubAuthUtil.checkUrl(url, (err, accessToken) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      global.applicationData.githubAccessToken = accessToken;
+      openList();
+
+      authWindow.close();
+    });
+  };
+  authWindow.webContents.on('did-get-redirect-request', (event, oldUrl, newUrl) => {
+    console.log('did-get-redirect-request');
+    console.log(`newUrl=${newUrl}`);
+    // auto login by cookie
+    callback(newUrl);
+  });
+
+  authWindow.webContents.on('will-navigate', (event, url) => {
+    // click authorize button
+    console.log('will-navigate');
+    callback(url);
+  });
+
+  authWindow.on('closed', () => {
+    authWindow = null;
+  });
+}
+
+export function openList() {
   listWindow = new BrowserWindow({width: 800, height: 600});
   listWindow.loadUrl(`file://${__dirname}/../list/index.html`);
 
@@ -19,7 +64,7 @@ app.on('ready', () => {
   listWindow.on('closed', () => {
     listWindow = null;
   });
-});
+}
 
 export function openEditor(issueId) {
   let editorWindow = new BrowserWindow({width: 800, height: 600});
