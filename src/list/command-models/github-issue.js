@@ -29,7 +29,7 @@ export default class GithubIssue {
       this.requestIssue(user, repo);
       return;
     }
-    issueDb.findAll((issues) => {
+    issueDb.findAll(user, repo, (issues) => {
       if (issues.length != 0) {
         // find in db
         dispatch({
@@ -53,6 +53,18 @@ export default class GithubIssue {
       dispatch({
         type: 'issues/fetch-complete',
         value: res
+      });
+    });
+  }
+
+  fetchRepo() {
+    this.github.repos.getAll({}, (err, repos) => {
+      repos = repos.sort((a, b) => {
+        return a.full_name > b.full_name ? 1 : -1;
+      });
+      dispatch({
+        type: 'repos/fetch-complete',
+        value: repos
       });
     });
   }
