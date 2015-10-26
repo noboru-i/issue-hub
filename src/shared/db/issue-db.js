@@ -44,8 +44,10 @@ class IssueDb {
     db.issues.findOne({_id: parseInt(id)}, callback);
   }
 
-  findAll(callback) {
-    db.issues.find({}).fetch(callback);
+  findAll(user, repo, callback) {
+    db.issues.find({
+      url: new RegExp(user + '/' + repo, 'g')
+    }).fetch(callback);
   }
 
   count() {

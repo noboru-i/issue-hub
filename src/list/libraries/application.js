@@ -16,7 +16,7 @@ export default class Application {
     ReactDOM.render(<Root/>, container);
 
     issueDb.initialize(() => {
-      this.githubIssue.fetchIssue('google', 'iosched');
+      this.githubIssue.fetchRepo();
     });
   }
 }
