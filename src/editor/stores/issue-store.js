@@ -12,6 +12,9 @@ class IssueStore extends ReduceStore {
 
   reduce(state, action) {
     switch(action.type) {
+    case 'issue/save-local':
+      console.log('issue/save-local');
+      return state;
     default:
       return state;
     }

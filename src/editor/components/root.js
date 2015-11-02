@@ -11,6 +11,9 @@ import Mode from 'brace/mode/markdown';
 import ThemeGithub from 'brace/theme/github';
 /*eslint-enable no-unused-vars*/
 
+import {dispatch} from '../dispatcher/app-dispatcher';
+
+import Menu from '../components/menu';
 import IssueStore from '../stores/issue-store.js';
 
 class Root extends React.Component {
@@ -33,7 +36,8 @@ class Root extends React.Component {
     const editorName = `editor_${issue.id}`;
 
     return <div>
-      <div style={{height: '10vh'}}>
+      <Menu onSave={this.onSave.bind(this)} />
+      <div style={{height: '10vh', fontSize: '2rem'}}>
         {issue.title}
       </div>
       <AceEditor
@@ -46,6 +50,13 @@ class Root extends React.Component {
         height="90vh"
       />
     </div>;
+  }
+
+  onSave() {
+    dispatch({
+      type: 'issue/save-local',
+      value: this.props.issue
+    });
   }
 }
 
