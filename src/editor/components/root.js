@@ -11,10 +11,9 @@ import Mode from 'brace/mode/markdown';
 import ThemeGithub from 'brace/theme/github';
 /*eslint-enable no-unused-vars*/
 
-import {dispatch} from '../dispatcher/app-dispatcher';
-
 import Menu from '../components/menu';
 import IssueStore from '../stores/issue-store.js';
+import issueDb from '../../shared/db/issue-db';
 
 class Root extends React.Component {
   constructor(props) {
@@ -45,18 +44,20 @@ class Root extends React.Component {
         theme="github"
         name={editorName}
         editorProps={{$blockScrolling: true}}
-        value={issue.body}
+        value={issue.edited_body ? issue.edited_body : issue.body}
         width="100%"
         height="90vh"
+        onChange={this.onChange.bind(this)}
       />
     </div>;
   }
 
+  onChange(newValue) {
+    this.props.issue.edited_body = newValue;
+  }
+
   onSave() {
-    dispatch({
-      type: 'issue/save-local',
-      value: this.props.issue
-    });
+    issueDb.save(this.props.issue);
   }
 }
 
