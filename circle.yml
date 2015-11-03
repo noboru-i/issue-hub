@@ -12,5 +12,5 @@ deployment:
       - bin/env2file src/shared/config/github.js
       - npm run package
       - mkdir -p dist
-      - tar cfvz dist/issue-hub-darwin-x64.tar.gz packages/v0.0.1/issue-hub-darwin-x64
+      - cd packages/v0.0.1/ && tar cfvz ../../dist/issue-hub-darwin-x64.tar.gz issue-hub-darwin-x64
       - cp -r dist $CIRCLE_ARTIFACTS/
