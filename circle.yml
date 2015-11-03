@@ -1,0 +1,10 @@
+machine:
+  timezone: Asia/Tokyo
+test:
+  override:
+    - echo 'no test'
+deployment:
+  master:
+    branch: master
+    commands:
+      - npm run package
