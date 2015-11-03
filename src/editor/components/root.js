@@ -28,14 +28,25 @@ class Root extends React.Component {
 
   static calculateState() {
     return {
-      issue: IssueStore.getState().get('issues'),
+      issue: IssueStore.getState().get('issue'),
       edited: IssueStore.getState().get('edited')
     };
   }
 
+  componentDidMount() {
+    issueDb.initialize(() => {
+      issueDb.find(this.props.issueId, (issue) => {
+        dispatch({
+          type: 'issue/init',
+          value: issue
+        });
+      });
+    });
+  }
+
   render() {
-    const issue = this.props.issue;
-    const editorName = `editor_${issue.id}`;
+    const issue = this.state.issue;
+    const editorName = `editor_${this.props.issueId}`;
 
     return <div>
       <Menu
@@ -59,19 +70,19 @@ class Root extends React.Component {
   }
 
   onChange(newValue) {
-    this.props.issue.edited_body = newValue;
+    this.state.issue.edited_body = newValue;
     dispatch({
       type: 'issue/start-edit'
     });
   }
 
   onSave() {
-    issueDb.save(this.props.issue);
+    issueDb.save(this.state.issue);
   }
 
   onPush() {
     const githubIssue = new GithubIssue(dispatch);
-    githubIssue.updateIssue(this.props.issue);
+    githubIssue.updateIssue(this.state.issue);
   }
 }
 
