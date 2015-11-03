@@ -7,7 +7,7 @@ test:
     - echo 'no test'
 deployment:
   master:
-    branch: circleci
+    branch: master
     commands:
       - bin/env2file src/shared/config/github.js
       - npm run package
