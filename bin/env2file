@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cat $1 | while read line
+do
+  if [[ $line =~ INPUT_YOUR_([A-Z_]+) ]] ; then
+    KEY=${BASH_REMATCH[1]}
+    eval VALUE='$'${KEY}
+    sed -i -e "s!${BASH_REMATCH[0]}!$VALUE!g" $1
+  fi
+done

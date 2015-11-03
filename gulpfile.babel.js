@@ -5,6 +5,10 @@ import plumber from 'gulp-plumber';
 import postcss from 'gulp-postcss';
 import postcssNested from 'postcss-nested';
 import packager from 'electron-packager';
+import zipFolder from 'electron-zip-packager';
+import path from 'path';
+import fs from 'fs';
+import childProcess from 'child_process';
 
 gulp.task(
   'compile',
@@ -62,7 +66,9 @@ gulp.task(
   'package:darwin',
   ['compile'],
   (done) => {
-    let devDependencies = Object.keys(pkg.devDependencies);
+    // https://github.com/joker1007/blackalbum/blob/master/gulpfile.coffee
+    const prodModules = childProcess.execFileSync('npm', ['ls', '--parseable', '--prod'], {encoding: 'utf8'}).split('\n');
+    const includeModules = prodModules.filter((f) => f != '').map((f) => path.basename(f));
     packager({
       dir: '.',
       out: 'packages/v' + pkg.version,
@@ -71,17 +77,8 @@ gulp.task(
       platform: 'darwin',
       version: '0.34.0',
       overwrite: true,
-      ignore: [
-        '/.DS_Store',
-        '/.eslintrc',
-        '/.gitignore',
-        '/README.md',
-        '/gulpfile.babel.js',
-        '/node_modules/.bin($|/)',
-        '/packages($|/)',
-        '/src($|/)'
-      ].concat(devDependencies.map(function(name) { return `/node_modules/${name}($|/)`; }))
-    }, () => {
+      ignore: new RegExp(`(^\/node_modules\/(?!${includeModules.join('|')}).*|gulpfile\.babel\.js|^/dist/.*|^/src/.*|\.babelrc)`)
+    }, (err, appPaths) => {
       done();
     });
   }
