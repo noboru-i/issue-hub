@@ -5,9 +5,7 @@ import plumber from 'gulp-plumber';
 import postcss from 'gulp-postcss';
 import postcssNested from 'postcss-nested';
 import packager from 'electron-packager';
-import zipFolder from 'electron-zip-packager';
 import path from 'path';
-import fs from 'fs';
 import childProcess from 'child_process';
 
 gulp.task(
@@ -78,8 +76,8 @@ gulp.task(
       version: '0.34.0',
       overwrite: true,
       ignore: new RegExp(`(^\/node_modules\/(?!${includeModules.join('|')}).*|gulpfile\.babel\.js|^/dist/.*|^/src/.*|\.babelrc)`)
-    }, (err, appPaths) => {
-      done();
+    }, (err) => {
+      done(err);
     });
   }
 );
