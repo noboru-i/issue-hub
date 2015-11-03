@@ -30,7 +30,8 @@ export default class Menu extends React.Component {
           {this.props.edited ? '変更済み' : '未変更'}
         </button>
 
-        <button className="btn btn-default pull-right">
+        <button className="btn btn-default pull-right"
+            onClick={this.props.onOpen}>
           <span className="icon icon-export"></span>
         </button>
       </div>
