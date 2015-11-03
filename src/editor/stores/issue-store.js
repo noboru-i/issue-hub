@@ -12,6 +12,12 @@ class IssueStore extends ReduceStore {
 
   reduce(state, action) {
     switch(action.type) {
+    case 'issue/start-edit':
+      console.log('issue/start-edit');
+      return state.set('edited', true);
+    case 'issue/update-complete':
+      state.set('edited', false);
+      return state.set('issue', action.value);
     default:
       return state;
     }

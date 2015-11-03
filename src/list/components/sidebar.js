@@ -1,6 +1,7 @@
 import React from 'react';
 import SidebarItem from './sidebar-item';
-import GithubIssue from '../command-models/github-issue';
+import GithubIssue from '../../shared/command-models/github-issue';
+import {dispatch} from '../dispatcher/app-dispatcher';
 
 export default class Sidebar extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class Sidebar extends React.Component {
   onSelectRepo(e) {
     console.log('onSelectRepo');
     const fullName = e.target.value;
-    const githubIssue = new GithubIssue();
+    const githubIssue = new GithubIssue(dispatch);
     const [user, repo] = fullName.split('/');
     githubIssue.fetchIssue(user, repo);
   }

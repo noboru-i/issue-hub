@@ -14,7 +14,8 @@ export default class Menu extends React.Component {
           Save
         </button>
 
-        <button className="btn btn-default">
+        <button className="btn btn-default"
+            onClick={this.props.onPush}>
           <span className="icon icon-upload icon-text"></span>
           Push
         </button>
@@ -22,6 +23,11 @@ export default class Menu extends React.Component {
         <button className="btn btn-default">
           <span className="icon icon-download icon-text"></span>
           Pull
+        </button>
+
+        <button className="btn btn-default pull-right">
+          <span className="icon icon-retweet icon-text"></span>
+          {this.props.edited ? '変更済み' : '未変更'}
         </button>
 
         <button className="btn btn-default pull-right">

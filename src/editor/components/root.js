@@ -14,6 +14,8 @@ import ThemeGithub from 'brace/theme/github';
 import Menu from '../components/menu';
 import IssueStore from '../stores/issue-store.js';
 import issueDb from '../../shared/db/issue-db';
+import GithubIssue from '../../shared/command-models/github-issue';
+import {dispatch} from '../dispatcher/app-dispatcher';
 
 class Root extends React.Component {
   constructor(props) {
@@ -26,7 +28,8 @@ class Root extends React.Component {
 
   static calculateState() {
     return {
-      issue: IssueStore.getState().get('issues')
+      issue: IssueStore.getState().get('issues'),
+      edited: IssueStore.getState().get('edited')
     };
   }
 
@@ -35,7 +38,10 @@ class Root extends React.Component {
     const editorName = `editor_${issue.id}`;
 
     return <div>
-      <Menu onSave={this.onSave.bind(this)} />
+      <Menu
+          edited={this.state.edited}
+          onSave={this.onSave.bind(this)}
+          onPush={this.onPush.bind(this)}/>
       <div style={{height: '10vh', fontSize: '2rem'}}>
         {issue.title}
       </div>
@@ -54,10 +60,18 @@ class Root extends React.Component {
 
   onChange(newValue) {
     this.props.issue.edited_body = newValue;
+    dispatch({
+      type: 'issue/start-edit'
+    });
   }
 
   onSave() {
     issueDb.save(this.props.issue);
+  }
+
+  onPush() {
+    const githubIssue = new GithubIssue(dispatch);
+    githubIssue.updateIssue(this.props.issue);
   }
 }
 
