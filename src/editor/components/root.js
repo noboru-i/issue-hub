@@ -11,7 +11,11 @@ import Mode from 'brace/mode/markdown';
 import ThemeGithub from 'brace/theme/github';
 /*eslint-enable no-unused-vars*/
 
+import Menu from '../components/menu';
 import IssueStore from '../stores/issue-store.js';
+import issueDb from '../../shared/db/issue-db';
+import GithubIssue from '../../shared/command-models/github-issue';
+import {dispatch} from '../dispatcher/app-dispatcher';
 
 class Root extends React.Component {
   constructor(props) {
@@ -24,7 +28,8 @@ class Root extends React.Component {
 
   static calculateState() {
     return {
-      issue: IssueStore.getState().get('issues')
+      issue: IssueStore.getState().get('issues'),
+      edited: IssueStore.getState().get('edited')
     };
   }
 
@@ -33,7 +38,11 @@ class Root extends React.Component {
     const editorName = `editor_${issue.id}`;
 
     return <div>
-      <div style={{height: '10vh'}}>
+      <Menu
+          edited={this.state.edited}
+          onSave={this.onSave.bind(this)}
+          onPush={this.onPush.bind(this)}/>
+      <div style={{height: '10vh', fontSize: '2rem'}}>
         {issue.title}
       </div>
       <AceEditor
@@ -41,11 +50,28 @@ class Root extends React.Component {
         theme="github"
         name={editorName}
         editorProps={{$blockScrolling: true}}
-        value={issue.body}
+        value={issue.edited_body ? issue.edited_body : issue.body}
         width="100%"
         height="90vh"
+        onChange={this.onChange.bind(this)}
       />
     </div>;
+  }
+
+  onChange(newValue) {
+    this.props.issue.edited_body = newValue;
+    dispatch({
+      type: 'issue/start-edit'
+    });
+  }
+
+  onSave() {
+    issueDb.save(this.props.issue);
+  }
+
+  onPush() {
+    const githubIssue = new GithubIssue(dispatch);
+    githubIssue.updateIssue(this.props.issue);
   }
 }
 

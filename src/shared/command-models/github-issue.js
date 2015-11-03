@@ -1,11 +1,11 @@
 import GitHubApi from 'github';
 import remote from 'remote';
 
-import {dispatch} from '../dispatcher/app-dispatcher';
 import issueDb from '../../shared/db/issue-db';
 
 export default class GithubIssue {
-  constructor() {
+  constructor(dispatch) {
+    this.dispatch = dispatch;
     this.github = new GitHubApi({
       // required
       version: '3.0.0',
@@ -32,7 +32,7 @@ export default class GithubIssue {
     issueDb.findAll(user, repo, (issues) => {
       if (issues.length != 0) {
         // find in db
-        dispatch({
+        this.dispatch({
           type: 'issues/fetch-complete',
           value: issues
         });
@@ -49,10 +49,32 @@ export default class GithubIssue {
       user: user,
       repo: repo
     }, (err, res) => {
+      res.forEach((i) => {
+        i.user = user;
+        i.repo = repo;
+      });
       issueDb.save(res);
-      dispatch({
+      this.dispatch({
         type: 'issues/fetch-complete',
         value: res
+      });
+    });
+  }
+
+  updateIssue(issue) {
+    this.github.issues.edit({
+      user: issue.user,
+      repo: issue.repo,
+      number: issue.number,
+      title: issue.edited_title ? issue.edited_title : issue.title,
+      body: issue.edited_body ? issue.edited_body : issue.body
+    }, (err, newIssue) => {
+      if (err) {
+        throw err;
+      }
+      this.dispatch({
+        type: 'issue/update-complete',
+        value: newIssue
       });
     });
   }
@@ -62,7 +84,7 @@ export default class GithubIssue {
       repos = repos.sort((a, b) => {
         return a.full_name > b.full_name ? 1 : -1;
       });
-      dispatch({
+      this.dispatch({
         type: 'repos/fetch-complete',
         value: repos
       });
