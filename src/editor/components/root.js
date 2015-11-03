@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 /*eslint-enable no-unused-vars*/
 import {Container} from 'flux/utils';
+import shell from 'shell';
 
 import AceEditor from 'react-ace';
 /*eslint-disable no-unused-vars*/
@@ -52,7 +53,8 @@ class Root extends React.Component {
       <Menu
           edited={this.state.edited}
           onSave={this.onSave.bind(this)}
-          onPush={this.onPush.bind(this)}/>
+          onPush={this.onPush.bind(this)}
+          onOpen={this.onOpen.bind(this)} />
       <div style={{height: '10vh', fontSize: '2rem'}}>
         {issue.title}
       </div>
@@ -83,6 +85,10 @@ class Root extends React.Component {
   onPush() {
     const githubIssue = new GithubIssue(dispatch);
     githubIssue.updateIssue(this.state.issue);
+  }
+
+  onOpen() {
+    shell.openExternal(this.state.issue.html_url);
   }
 }
 
