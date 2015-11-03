@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import Url from 'url';
 
 import Root from '../components/root';
-import issueDb from '../../shared/db/issue-db';
 
 export default class Application {
   constructor() {
@@ -14,11 +13,7 @@ export default class Application {
   run() {
     let issueId = Url.parse(location.href, true).query.issue_id;
 
-    issueDb.initialize(() => {
-      issueDb.find(issueId, (issue) => {
-        var container = document.querySelector('#container');
-        ReactDOM.render(<Root issue={issue} />, container);
-      });
-    });
+    var container = document.querySelector('#container');
+    ReactDOM.render(<Root issueId={issueId} />, container);
   }
 }
