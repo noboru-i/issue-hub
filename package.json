@@ -37,6 +37,7 @@
     "postcss-nested": "^1.0.0"
   },
   "dependencies": {
+    "brace": "^0.5.1",
     "flux": "^2.1.1",
     "github": "^0.2.4",
     "github-markdown-css": "^2.1.0",
