@@ -74,6 +74,7 @@ gulp.task(
       arch: 'x64',
       platform: 'darwin',
       version: '0.34.0',
+      icon: 'assets/issue-hub.icns',
       overwrite: true,
       ignore: new RegExp(`(^\/node_modules\/(?!${includeModules.join('|')}).*|gulpfile\.babel\.js|^/dist/.*|^/src/.*|\.babelrc)`)
     }, (err) => {
