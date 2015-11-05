@@ -1,0 +1,21 @@
+.container {
+  height: 100vh;
+}
+
+.title {
+  height: 10vh;
+  font-size: 2rem;
+}
+
+.edit-main {
+  display: flex;
+  justify-content: flex-start;
+  height: 90vh;
+  &__cell {
+    flex-grow: 1;
+  }
+}
+
+.preview {
+  overflow: scroll;
+}

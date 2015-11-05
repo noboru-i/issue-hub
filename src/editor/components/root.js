@@ -12,6 +12,8 @@ import Mode from 'brace/mode/markdown';
 import ThemeGithub from 'brace/theme/github';
 /*eslint-enable no-unused-vars*/
 
+import marked from 'marked';
+
 import Menu from '../components/menu';
 import IssueStore from '../stores/issue-store.js';
 import issueDb from '../../shared/db/issue-db';
@@ -46,35 +48,41 @@ class Root extends React.Component {
   }
 
   render() {
+    console.log('render');
     const issue = this.state.issue;
     const editorName = `editor_${this.props.issueId}`;
 
-    return <div>
+    return <div style={{height: '100%'}}>
       <Menu
           edited={this.state.edited}
           onSave={this.onSave.bind(this)}
           onPush={this.onPush.bind(this)}
           onOpen={this.onOpen.bind(this)} />
-      <div style={{height: '10vh', fontSize: '2rem'}}>
+      <div className="title">
         {issue.title}
       </div>
-      <AceEditor
-        mode="markdown"
-        theme="github"
-        name={editorName}
-        editorProps={{$blockScrolling: true}}
-        value={issue.edited_body ? issue.edited_body : issue.body}
-        width="100%"
-        height="90vh"
-        onChange={this.onChange.bind(this)}
-      />
+      <div className="edit-main">
+        <AceEditor
+          mode="markdown"
+          theme="github"
+          name={editorName}
+          editorProps={{$blockScrolling: true}}
+          value={issue.edited_body ? issue.edited_body : issue.body}
+          width="100%"
+          height="100%"
+          className="edit-main__cell"
+          onChange={this.onChange.bind(this)}
+        />
+        <div className="edit-main__cell preview"
+          dangerouslySetInnerHTML={{__html: marked(issue.edited_body || '')}} />
+      </div>
     </div>;
   }
 
   onChange(newValue) {
-    this.state.issue.edited_body = newValue;
     dispatch({
-      type: 'issue/start-edit'
+      type: 'issue/start-edit',
+      value: newValue
     });
   }
 
