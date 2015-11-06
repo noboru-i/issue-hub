@@ -48,8 +48,7 @@ class Root extends React.Component {
   }
 
   render() {
-    console.log('render');
-    const issue = this.state.issue;
+    const issue = this.state.issue.toJS();
     const editorName = `editor_${this.props.issueId}`;
 
     return <div style={{height: '100%'}}>

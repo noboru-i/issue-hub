@@ -5,7 +5,7 @@ import AppDispatcher from '../dispatcher/app-dispatcher';
 class IssueStore extends ReduceStore {
   getInitialState() {
     return Immutable.fromJS({
-      issue: {},
+      issue: Immutable.fromJS({}),
       edited: false
     });
   }
@@ -13,19 +13,16 @@ class IssueStore extends ReduceStore {
   reduce(state, action) {
     switch(action.type) {
     case 'issue/init':
-      return state.set('issue', action.value);
+      return state.set('issue', Immutable.fromJS(action.value));
 
     case 'issue/start-edit':
-      const issue = state.get('issue');
-      issue.edited_body = action.value;
       return state
-        .remove('issue')
-        .set('issue', issue)
+        .setIn(['issue', 'edited_body'], action.value)
         .set('edited', true);
 
     case 'issue/update-complete':
       return state.set('edited', false)
-          .set('issue', action.value);
+          .set('issue', Immutable.fromJS(action.value));
 
     default:
       return state;
