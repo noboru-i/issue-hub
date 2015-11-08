@@ -61,8 +61,6 @@ def delete_release(id):
     subprocess.call('git config --global user.name "CircleCI"'.split(' '))
     subprocess.call(('git tag -d v%s' % tag_version).split(' '))
     subprocess.call(('git push origin :v%s' % tag_version).split(' '))
-    subprocess.call(('git tag -a v%s -m "v%s"' % (tag_version, tag_version)).split(' '))
-    subprocess.call(('git push origin v%s' % tag_version).split(' '))
 
 # create new release
 def create_release():
