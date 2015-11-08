@@ -1,6 +1,6 @@
 {
   "name": "issue-hub",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "GitHub issue client made by Electron.",
   "main": "app/browser/index.js",
   "scripts": {
