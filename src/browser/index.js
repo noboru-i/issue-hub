@@ -25,6 +25,7 @@ app.on('ready', () => {
       submenu: [
           { label: 'About Application', role: 'about' },
           { type: 'separator' },
+          { label: 'Logout from GitHub', click: logout },
           { label: 'Quit', accelerator: 'Cmd+Q', click: () => { app.quit(); }}
       ]
     },
@@ -111,4 +112,30 @@ export function openEditor(issueId) {
   });
 
   editorWindows.push(editorWindow);
+}
+
+function logout() {
+  const dummyWindow = new BrowserWindow({ width: 800, height: 600, show: false });
+
+  dummyWindow.webContents.session.cookies.get({}, function(error, cookies) {
+    if (error) {
+      throw error;
+    }
+    for (var i = cookies.length - 1; i >= 0; i--) {
+      removeCookie(dummyWindow, cookies[i]);
+    }
+  });
+}
+
+function removeCookie(dummyWindow, cookie) {
+  const url = 'http' + (cookie.secure ? 's' : '') + '://' + cookie.domain +cookie.path;
+  dummyWindow.webContents.session.cookies.remove(
+    {
+      'url': url,
+      'name': cookie.name
+    },
+    function(error) {
+      if (error) throw error;
+      console.log('cookie delete : ', cookie);
+    });
 }
