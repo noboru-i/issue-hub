@@ -3,6 +3,7 @@
 import app from 'app';
 import BrowserWindow from 'browser-window';
 import Menu from 'menu';
+import dialog from 'dialog';
 
 import ApplicationData from './libraries/application-data';
 import githubAuthUtil from './command-models/github-auth-util';
@@ -125,6 +126,16 @@ function logout() {
       removeCookie(dummyWindow, cookie);
     });
   });
+
+  dialog.showMessageBox(
+    {
+      message: 'logout completed!\nPlease re-open Issue Hub',
+      buttons: ['ok']
+    },
+    () => {
+      app.quit();
+    }
+  );
 }
 
 function removeCookie(dummyWindow, cookie) {
