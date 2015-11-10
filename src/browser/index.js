@@ -3,6 +3,7 @@
 import app from 'app';
 import BrowserWindow from 'browser-window';
 import Menu from 'menu';
+import dialog from 'dialog';
 
 import ApplicationData from './libraries/application-data';
 import githubAuthUtil from './command-models/github-auth-util';
@@ -25,6 +26,7 @@ app.on('ready', () => {
       submenu: [
           { label: 'About Application', role: 'about' },
           { type: 'separator' },
+          { label: 'Logout from GitHub', click: logout },
           { label: 'Quit', accelerator: 'Cmd+Q', click: () => { app.quit(); }}
       ]
     },
@@ -111,4 +113,41 @@ export function openEditor(issueId) {
   });
 
   editorWindows.push(editorWindow);
+}
+
+function logout() {
+  const dummyWindow = new BrowserWindow({ width: 800, height: 600, show: false });
+
+  dummyWindow.webContents.session.cookies.get({}, (error, cookies) => {
+    if (error) {
+      throw error;
+    }
+    cookies.forEach((cookie) => {
+      removeCookie(dummyWindow, cookie);
+    });
+  });
+
+  dialog.showMessageBox(
+    {
+      message: 'logout completed!\nPlease re-open Issue Hub',
+      buttons: ['ok']
+    },
+    () => {
+      app.quit();
+    }
+  );
+}
+
+function removeCookie(dummyWindow, cookie) {
+  const url = 'http' + (cookie.secure ? 's' : '') + '://' + cookie.domain + cookie.path;
+  dummyWindow.webContents.session.cookies.remove(
+    {
+      'url': url,
+      'name': cookie.name
+    },
+    (error) => {
+      if (error) {
+        throw error;
+      }
+    });
 }
