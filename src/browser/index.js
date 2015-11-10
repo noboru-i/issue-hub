@@ -117,25 +117,26 @@ export function openEditor(issueId) {
 function logout() {
   const dummyWindow = new BrowserWindow({ width: 800, height: 600, show: false });
 
-  dummyWindow.webContents.session.cookies.get({}, function(error, cookies) {
+  dummyWindow.webContents.session.cookies.get({}, (error, cookies) => {
     if (error) {
       throw error;
     }
-    for (var i = cookies.length - 1; i >= 0; i--) {
-      removeCookie(dummyWindow, cookies[i]);
-    }
+    cookies.forEach((cookie) => {
+      removeCookie(dummyWindow, cookie);
+    });
   });
 }
 
 function removeCookie(dummyWindow, cookie) {
-  const url = 'http' + (cookie.secure ? 's' : '') + '://' + cookie.domain +cookie.path;
+  const url = 'http' + (cookie.secure ? 's' : '') + '://' + cookie.domain + cookie.path;
   dummyWindow.webContents.session.cookies.remove(
     {
       'url': url,
       'name': cookie.name
     },
-    function(error) {
-      if (error) throw error;
-      console.log('cookie delete : ', cookie);
+    (error) => {
+      if (error) {
+        throw error;
+      }
     });
 }
