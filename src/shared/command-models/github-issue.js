@@ -79,11 +79,33 @@ export default class GithubIssue {
     });
   }
 
-  fetchRepo() {
+  fetchRepo(forceReload = false) {
+    if (forceReload) {
+      this.requestRepo();
+      return;
+    }
+    issueDb.findAllRepos((repos) => {
+      if (repos.length != 0) {
+        // find in db
+        this.dispatch({
+          type: 'repos/fetch-complete',
+          value: repos
+        });
+        return;
+      }
+
+      // request to GitHub
+      this.requestRepo();
+    });
+  }
+
+
+  requestRepo() {
     this.github.repos.getAll({}, (err, repos) => {
       repos = repos.sort((a, b) => {
         return a.full_name > b.full_name ? 1 : -1;
       });
+      issueDb.saveRepo(repos);
       this.dispatch({
         type: 'repos/fetch-complete',
         value: repos
