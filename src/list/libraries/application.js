@@ -13,10 +13,10 @@ export default class Application {
   }
 
   run() {
-    var container = document.querySelector('#container');
-    ReactDOM.render(<Root/>, container);
-
     issueDb.initialize(() => {
+      var container = document.querySelector('#container');
+      ReactDOM.render(<Root/>, container);
+
       this.githubIssue.fetchRepo();
     });
   }
