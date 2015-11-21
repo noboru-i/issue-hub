@@ -1,3 +1,4 @@
+/* global localStorage */
 import React from 'react';
 import {dispatch} from '../dispatcher/app-dispatcher';
 import remote from 'remote';
@@ -7,6 +8,15 @@ export default class SidebarItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {hover: false};
+  }
+
+  componentDidMount() {
+    if (Number(localStorage.issue_num) === this.props.issue.id) {
+      // workaround for "Cannot dispatch in the middle of a dispatch."
+      setTimeout(() => {
+        this.itemClick();
+      }, 0);
+    }
   }
 
   render() {
@@ -39,6 +49,7 @@ export default class SidebarItem extends React.Component {
   itemClick() {
     console.log('itemClick');
     console.log(this.props.issue);
+    localStorage.issue_num = this.props.issue.id;
     dispatch({
       type: 'issue/select',
       value: this.props.issue

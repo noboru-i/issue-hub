@@ -19,8 +19,10 @@ class IssueDb {
     this.db = new minimongo.IndexedDb(
       {namespace: 'issue-hub'},
       () => {
-        db.addCollection('issues', () => {
-          callback();
+        db.addCollection('repos', () => {
+          db.addCollection('issues', () => {
+            callback();
+          });
         });
       },
       () => {
@@ -52,6 +54,17 @@ class IssueDb {
 
   count() {
     return db.issues.count;
+  }
+
+  saveRepo(repos) {
+    repos.forEach((elm) => {
+      elm['_id'] = elm.id;
+    });
+    db.repos.upsert(repos);
+  }
+
+  findAllRepos(callback) {
+    db.repos.find().fetch(callback);
   }
 }
 
