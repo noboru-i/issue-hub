@@ -49,6 +49,7 @@ class Root extends React.Component {
 
   render() {
     const issue = this.state.issue.toJS();
+    console.log(issue);
     const editorName = `editor_${this.props.issueId}`;
 
     return <div style={{height: '100%'}}>
@@ -86,6 +87,7 @@ class Root extends React.Component {
   }
 
   onSave() {
+    console.log(this.state.issue);
     issueDb.save(this.state.issue);
   }
 

@@ -28,7 +28,7 @@ export default class SidebarItem extends React.Component {
         onMouseOver={this.onMouseOver.bind(this)}
         onMouseLeave={this.onMouseLeave.bind(this)}>
       <div className="media-body">
-        <strong>{issue.title}</strong>
+        <strong>{issue.title || '新規ドキュメント'}</strong>
         <p>{issue.body}</p>
       </div>
     </li>;

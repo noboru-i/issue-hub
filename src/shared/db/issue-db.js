@@ -48,7 +48,8 @@ class IssueDb {
 
   findAll(user, repo, callback) {
     db.issues.find({
-      url: new RegExp(user + '/' + repo, 'g')
+      user: user,
+      repo: repo
     }).fetch(callback);
   }
 

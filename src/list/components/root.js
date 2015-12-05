@@ -15,8 +15,10 @@ class Root extends React.Component {
   }
 
   static calculateState() {
+    console.log('calculateState');
+    console.log(IssuesStore.getState().get('issues').toArray());
     return {
-      issues: IssuesStore.getState().get('issues'),
+      issues: IssuesStore.getState().get('issues').toArray(),
       selectedIssue: IssuesStore.getState().get('selectedIssue'),
       repos: ReposStore.getState().get('repos')
     };
