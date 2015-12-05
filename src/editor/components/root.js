@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 /*eslint-enable no-unused-vars*/
 import {Container} from 'flux/utils';
-import shell from 'shell';
+import {shell} from 'electron';
 
 import AceEditor from 'react-ace';
 /*eslint-disable no-unused-vars*/
@@ -95,7 +95,8 @@ class Root extends React.Component {
   }
 
   onOpen() {
-    shell.openExternal(this.state.issue.html_url);
+    const issue = this.state.issue.toJS();
+    shell.openExternal(issue.html_url);
   }
 }
 

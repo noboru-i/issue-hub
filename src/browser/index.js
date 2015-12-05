@@ -1,9 +1,7 @@
 /*global global*/
 /*global __dirname*/
 import app from 'app';
-import BrowserWindow from 'browser-window';
-import Menu from 'menu';
-import dialog from 'dialog';
+import {BrowserWindow, Menu, dialog} from 'electron';
 
 import ApplicationData from './libraries/application-data';
 import githubAuthUtil from './command-models/github-auth-util';
@@ -48,7 +46,7 @@ app.on('ready', () => {
 
 export function openAuth() {
   authWindow = new BrowserWindow({width: 800, height: 600, show: false, 'node-integration': false});
-  authWindow.loadUrl(githubAuthUtil.getAuthUrl());
+  authWindow.loadURL(githubAuthUtil.getAuthUrl());
   authWindow.show();
 
   const callback = (url) => {
@@ -83,7 +81,7 @@ export function openAuth() {
 
 export function openList() {
   listWindow = new BrowserWindow({width: 800, height: 600});
-  listWindow.loadUrl(`file://${__dirname}/../list/index.html`);
+  listWindow.loadURL(`file://${__dirname}/../list/index.html`);
 
   // TODO only debug
   listWindow.openDevTools();
@@ -95,7 +93,7 @@ export function openList() {
 
 export function openEditor(issueId) {
   let editorWindow = new BrowserWindow({width: 800, height: 600});
-  editorWindow.loadUrl(`file://${__dirname}/../editor/index.html?issue_id=${issueId}`);
+  editorWindow.loadURL(`file://${__dirname}/../editor/index.html?issue_id=${issueId}`);
 
   // TODO only debug
   editorWindow.openDevTools();

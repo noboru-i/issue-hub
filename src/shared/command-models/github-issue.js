@@ -1,5 +1,5 @@
 import GitHubApi from 'github';
-import remote from 'remote';
+import {remote} from 'electron';
 
 import issueDb from '../../shared/db/issue-db';
 
