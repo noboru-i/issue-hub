@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 /*eslint-enable no-unused-vars*/
 import {Container} from 'flux/utils';
-import shell from 'shell';
+import {shell} from 'electron';
 
 import AceEditor from 'react-ace';
 /*eslint-disable no-unused-vars*/

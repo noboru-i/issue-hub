@@ -1,7 +1,6 @@
 import React from 'react';
 import marked from 'marked';
-import remote from 'remote';
-import shell from 'shell';
+import {shell, remote} from 'electron';
 
 const openEditor = remote.require('../browser/index.js').openEditor;
 

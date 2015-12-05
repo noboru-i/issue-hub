@@ -1,7 +1,7 @@
 /* global localStorage */
 import React from 'react';
 import {dispatch} from '../dispatcher/app-dispatcher';
-import remote from 'remote';
+import {remote} from 'electron';
 const openEditor = remote.require('../browser/index.js').openEditor;
 
 export default class SidebarItem extends React.Component {

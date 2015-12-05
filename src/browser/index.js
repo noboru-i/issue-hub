@@ -1,9 +1,7 @@
 /*global global*/
 /*global __dirname*/
 import app from 'app';
-import BrowserWindow from 'browser-window';
-import Menu from 'menu';
-import dialog from 'dialog';
+import {BrowserWindow, Menu, dialog} from 'electron';
 
 import ApplicationData from './libraries/application-data';
 import githubAuthUtil from './command-models/github-auth-util';
