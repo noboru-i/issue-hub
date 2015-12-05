@@ -95,7 +95,8 @@ class Root extends React.Component {
   }
 
   onOpen() {
-    shell.openExternal(this.state.issue.html_url);
+    const issue = this.state.issue.toJS();
+    shell.openExternal(issue.html_url);
   }
 }
 
